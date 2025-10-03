@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TranslationService {
-  static const String _defaultLanguage = 'en';
+  static const String _defaultLanguage = 'rw';
   static const String _languageKey = 'selected_language';
 
   static final Map<String, Map<String, String>> _translations = {};
@@ -115,13 +115,13 @@ class TranslationService {
 
   // Get available languages
   static List<Map<String, String>> get availableLanguages => [
-    {'code': 'en', 'name': 'English', 'nativeName': 'English', 'flag': '🇬🇧'},
     {
       'code': 'rw',
       'name': 'Kinyarwanda',
       'nativeName': 'Ikinyarwanda',
       'flag': '🇷🇼',
     },
+    {'code': 'en', 'name': 'English', 'nativeName': 'English', 'flag': '🇬🇧'},
     {'code': 'fr', 'name': 'French', 'nativeName': 'Français', 'flag': '🇫🇷'},
   ];
 

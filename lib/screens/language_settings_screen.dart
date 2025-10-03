@@ -14,11 +14,9 @@ class LanguageSettingsScreen extends StatefulWidget {
 }
 
 class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
-  List<String> _selectedLanguages = [];
-  Map<String, String> _languageProficiencies = {};
   bool _isLoading = true;
   bool _isSaving = false;
-  String _appLanguage = 'en';
+  String _appLanguage = 'rw';
 
   @override
   void initState() {
@@ -32,24 +30,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
     });
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      // Load saved language preferences
-      final savedLanguages =
-          prefs.getStringList('userLanguagePreferences') ?? [];
-      final savedProficiencies = <String, String>{};
-
-      // Load saved proficiencies
-      for (final language in savedLanguages) {
-        final proficiency = prefs.getString('languageProficiency_$language');
-        if (proficiency != null) {
-          savedProficiencies[language] = proficiency;
-        }
-      }
-
       setState(() {
-        _selectedLanguages = savedLanguages;
-        _languageProficiencies = savedProficiencies;
         _appLanguage = TranslationService.currentLanguage;
         _isLoading = false;
       });
@@ -75,16 +56,6 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
     });
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      // Save language preferences
-      await prefs.setStringList('userLanguagePreferences', _selectedLanguages);
-
-      // Save proficiencies
-      for (final entry in _languageProficiencies.entries) {
-        await prefs.setString('languageProficiency_${entry.key}', entry.value);
-      }
-
       setState(() {
         _isSaving = false;
       });
@@ -92,7 +63,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('language_settings_saved'.tr),
+            content: Text('Language Settings Saved'.tr),
             backgroundColor: const Color(0xFF4CAF50),
           ),
         );
@@ -105,7 +76,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('error_saving_settings'.tr + ': $e'),
+            content: Text('Error Saving Settings'.tr + ': $e'),
             backgroundColor: AppTheme.primaryColor,
           ),
         );
@@ -180,56 +151,6 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
                         ],
                       ),
                     ),
-                    // Save Button
-                    if (!_isLoading)
-                      GestureDetector(
-                        onTap: _isSaving ? null : _saveLanguageSettings,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppTheme.spacingM,
-                            vertical: AppTheme.spacingS,
-                          ),
-                          decoration: BoxDecoration(
-                            color:
-                                _isSaving
-                                    ? AppTheme.textTertiary
-                                    : AppTheme.primaryColor,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_isSaving) ...[
-                                const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                              ] else ...[
-                                const Icon(
-                                  FontAwesomeIcons.save,
-                                  color: Colors.white,
-                                  size: 14,
-                                ),
-                                const SizedBox(width: 8),
-                              ],
-                              Text(
-                                _isSaving ? 'loading'.tr : 'save'.tr,
-                                style: AppTheme.bodySmall.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                   ],
                 ),
               ),
@@ -251,7 +172,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
                           ),
                           child: Column(
                             children: [
-                              // App Language Selection Card
+                              // Language Selection Card
                               CustomCard(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,14 +188,15 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
                                           width: AppTheme.spacingS,
                                         ),
                                         Text(
-                                          'App Language',
+                                          'Select Language'.tr,
                                           style: AppTheme.heading4,
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: AppTheme.spacingM),
                                     Text(
-                                      'Choose the language for the app interface',
+                                      'Choose your preferred language for the entire app'
+                                          .tr,
                                       style: AppTheme.bodyMedium.copyWith(
                                         color: AppTheme.textSecondary,
                                       ),
@@ -365,7 +287,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
 
                               const SizedBox(height: AppTheme.spacingL),
 
-                              // Language Preferences Card
+                              // Current Language Display
                               CustomCard(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,7 +295,7 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
                                     Row(
                                       children: [
                                         Icon(
-                                          FontAwesomeIcons.language,
+                                          FontAwesomeIcons.checkCircle,
                                           color: AppTheme.primaryColor,
                                           size: 20,
                                         ),
@@ -381,134 +303,64 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
                                           width: AppTheme.spacingS,
                                         ),
                                         Text(
-                                          'Language Preferences'.tr,
+                                          'Current Language'.tr,
                                           style: AppTheme.heading4,
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: AppTheme.spacingM),
-                                    Text(
-                                      'Select Languages Proficiency'.tr,
-                                      style: AppTheme.bodyMedium.copyWith(
-                                        color: AppTheme.textSecondary,
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.all(
+                                        AppTheme.spacingM,
                                       ),
-                                    ),
-                                    const SizedBox(height: AppTheme.spacingL),
-
-                                    // Language Preferences Widget
-                                    LanguagePreferencesWidget(
-                                      selectedLanguages: _selectedLanguages,
-                                      languageProficiencies:
-                                          _languageProficiencies,
-                                      onLanguagesChanged: (languages) {
-                                        setState(() {
-                                          _selectedLanguages = languages;
-                                        });
-                                      },
-                                      onProficienciesChanged: (proficiencies) {
-                                        setState(() {
-                                          _languageProficiencies =
-                                              proficiencies;
-                                        });
-                                      },
-                                      isRequired: false,
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              const SizedBox(height: AppTheme.spacingL),
-
-                              // Current Settings Summary
-                              if (_selectedLanguages.isNotEmpty)
-                                CustomCard(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primaryColor
+                                            .withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(
+                                          AppTheme.radiusS,
+                                        ),
+                                        border: Border.all(
+                                          color: AppTheme.primaryColor
+                                              .withOpacity(0.3),
+                                        ),
+                                      ),
+                                      child: Row(
                                         children: [
-                                          Icon(
-                                            FontAwesomeIcons.infoCircle,
-                                            color: AppTheme.primaryColor,
-                                            size: 20,
+                                          Text(
+                                            TranslationService
+                                                .availableLanguages
+                                                .firstWhere(
+                                                  (lang) =>
+                                                      lang['code'] ==
+                                                      _appLanguage,
+                                                )['flag']!,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: AppTheme.spacingS,
                                           ),
                                           Text(
-                                            'Current Settings'.tr,
-                                            style: AppTheme.heading4,
+                                            TranslationService
+                                                .availableLanguages
+                                                .firstWhere(
+                                                  (lang) =>
+                                                      lang['code'] ==
+                                                      _appLanguage,
+                                                )['nativeName']!,
+                                            style: AppTheme.bodyLarge.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: AppTheme.primaryColor,
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: AppTheme.spacingM),
-
-                                      ..._selectedLanguages.map((language) {
-                                        final proficiency =
-                                            _languageProficiencies[language] ??
-                                            'Not specified';
-                                        return Container(
-                                          margin: const EdgeInsets.only(
-                                            bottom: AppTheme.spacingS,
-                                          ),
-                                          padding: const EdgeInsets.all(
-                                            AppTheme.spacingM,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.backgroundElevated,
-                                            borderRadius: BorderRadius.circular(
-                                              AppTheme.radiusS,
-                                            ),
-                                            border: Border.all(
-                                              color: AppTheme.borderLight,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                language,
-                                                style: AppTheme.bodyMedium
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                              const SizedBox(
-                                                width: AppTheme.spacingS,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          AppTheme.spacingS,
-                                                      vertical: 4,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: AppTheme.primaryColor
-                                                      .withOpacity(0.1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                child: Text(
-                                                  proficiency,
-                                                  style: AppTheme.caption
-                                                      .copyWith(
-                                                        color:
-                                                            AppTheme
-                                                                .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
+                              ),
 
                               const SizedBox(height: AppTheme.spacingXXL),
                             ],

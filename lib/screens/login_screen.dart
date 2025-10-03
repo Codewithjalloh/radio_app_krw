@@ -222,26 +222,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomSectionHeader(
-                        title: 'What you\'ll get:',
+                        title: 'What You\'ll Get'.tr,
                         icon: FontAwesomeIcons.star,
                       ),
                       const SizedBox(height: AppTheme.spacingM),
                       _buildFeatureItem(
                         FontAwesomeIcons.radio,
-                        'Live Radio Streaming',
-                        'Listen to KT Radio 96.7 FM live',
+                        'Live Radio Streaming'.tr,
+                        'Listen To KT Radio Live'.tr,
                       ),
                       const SizedBox(height: AppTheme.spacingM),
                       _buildFeatureItem(
                         FontAwesomeIcons.calendar,
-                        'Show Schedules & Programs',
-                        'Never miss your favorite shows',
+                        'Show Schedules Programs'.tr,
+                        'Never Miss Favorite Shows'.tr,
                       ),
                       const SizedBox(height: AppTheme.spacingM),
                       _buildFeatureItem(
                         FontAwesomeIcons.newspaper,
-                        'Latest News & Updates',
-                        'Stay informed with local news',
+                        'Latest News Updates'.tr,
+                        'Stay Informed Local News'.tr,
                       ),
                     ],
                   ),
