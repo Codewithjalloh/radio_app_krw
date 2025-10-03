@@ -16,6 +16,7 @@ import 'change_password_screen.dart';
 import 'account_settings_screen.dart';
 import 'advertise_screen.dart';
 import 'partnership_screen.dart';
+import 'feedback_screen.dart';
 import 'language_settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -455,6 +456,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
+
+                      const SizedBox(height: AppTheme.spacingL),
+
+                      // Feedback
+                      _buildSection('Feedback'.tr, FontAwesomeIcons.commentDots, [
+                        _buildSettingItem(
+                          'Share Your Feedback'.tr,
+                          'Help us improve KT Radio with your thoughts and suggestions'
+                              .tr,
+                          FontAwesomeIcons.commentDots,
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FeedbackScreen(),
+                            ),
+                          ),
+                        ),
+                      ]),
 
                       const SizedBox(height: AppTheme.spacingL),
 
