@@ -250,7 +250,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               onTap: _previousStep,
                               child: Center(
                                 child: Text(
-                                  'Previous',
+                                  'Previous'.tr,
                                   style: AppTheme.bodyLarge.copyWith(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -287,8 +287,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             child: Center(
                               child: Text(
                                 _currentStep == _totalSteps - 1
-                                    ? 'Complete'
-                                    : 'Next',
+                                    ? 'Complete'.tr
+                                    : 'Next'.tr,
                                 style: AppTheme.bodyLarge.copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -324,7 +324,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Expanded(
                   child: _buildTextField(
                     controller: _firstNameController,
-                    label: 'First Name',
+                    label: 'First Name'.tr,
                     icon: FontAwesomeIcons.user,
                   ),
                 ),
@@ -332,7 +332,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Expanded(
                   child: _buildTextField(
                     controller: _lastNameController,
-                    label: 'Last Name',
+                    label: 'Last Name'.tr,
                     icon: FontAwesomeIcons.user,
                   ),
                 ),
@@ -344,7 +344,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             // Email
             _buildTextField(
               controller: _emailController,
-              label: 'Email Address',
+              label: 'Email Address'.tr,
               icon: FontAwesomeIcons.envelope,
               keyboardType: TextInputType.emailAddress,
             ),
@@ -354,7 +354,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             // Phone
             _buildTextField(
               controller: _phoneController,
-              label: 'Phone Number',
+              label: 'Phone Number'.tr,
               icon: FontAwesomeIcons.phone,
               keyboardType: TextInputType.phone,
             ),
@@ -363,7 +363,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Age Range
             Text(
-              'Age Range',
+              'Age Range'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -379,7 +379,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Gender
             Text(
-              'Gender',
+              'Gender'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -408,7 +408,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Province
             Text(
-              'Province',
+              'Province'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -424,7 +424,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             if (_selectedProvince.isNotEmpty) ...[
               const SizedBox(height: 30),
               Text(
-                'District',
+                'District'.tr,
                 style: AppTheme.bodyLarge.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -447,7 +447,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Location Type
             Text(
-              'Location Type',
+              'Location Type'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -541,7 +541,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Device Type
             Text(
-              'Primary Device',
+              'Primary Device'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -559,7 +559,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Internet Connection
             Text(
-              'Internet Connection',
+              'Internet Connection'.tr,
               style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 15),
@@ -648,7 +648,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Additional fields
             Text(
-              'Additional Information',
+              'Additional Information'.tr,
               style: AppTheme.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppTheme.textPrimary,
@@ -658,7 +658,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Occupation
             _buildDropdownField(
-              'Occupation',
+              'Occupation'.tr,
               UserDataConstants.occupations,
               _selectedOccupation,
               (value) {
@@ -690,7 +690,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   style: AppTheme.bodyLarge,
                   decoration: InputDecoration(
-                    labelText: 'Please specify your occupation',
+                    labelText: 'Please Specify Your Occupation'.tr,
                     labelStyle: AppTheme.bodyLarge.copyWith(
                       color: AppTheme.textSecondary,
                     ),
@@ -709,7 +709,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Education Level
             _buildDropdownField(
-              'Education Level',
+              'Education Level'.tr,
               UserDataConstants.educationLevels,
               _selectedEducationLevel,
               (value) {
@@ -723,7 +723,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Marital Status
             _buildDropdownField(
-              'Marital Status',
+              'Marital Status'.tr,
               UserDataConstants.maritalStatuses,
               _selectedMaritalStatus,
               (value) {
@@ -737,7 +737,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // Earning Range
             _buildDropdownField(
-              'Earning Range',
+              'Earning Range'.tr,
               UserDataConstants.earningRanges,
               _selectedEarningRange,
               (value) {
@@ -770,7 +770,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Newsletter Subscription',
+                          'Newsletter Subscription'.tr,
                           style: AppTheme.bodyLarge.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -778,7 +778,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           ),
                         ),
                         Text(
-                          'Receive updates about new shows and news',
+                          'Receive Updates About New Shows And News'.tr,
                           style: AppTheme.caption.copyWith(
                             color: AppTheme.textSecondary,
                           ),

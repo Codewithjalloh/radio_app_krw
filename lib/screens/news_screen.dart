@@ -12,7 +12,12 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   int _selectedCategory = 0;
-  final List<String> _categories = ['All', 'Amakuru', 'Sports', 'Ibyahise'];
+  final List<String> _categories = [
+    'All'.tr,
+    'Amakuru',
+    'Sports'.tr,
+    'Ibyahise',
+  ];
 
   final List<Map<String, dynamic>> _newsItems = [
     {
@@ -131,7 +136,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         children: [
                           Text('News'.tr, style: AppTheme.heading3),
                           Text(
-                            'Stay informed with latest news',
+                            'Stay Informed With Latest News'.tr,
                             style: AppTheme.bodyMedium.copyWith(
                               color: AppTheme.textSecondary,
                             ),
@@ -167,7 +172,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       const SizedBox(width: AppTheme.spacingS),
                       Expanded(
                         child: Text(
-                          'BREAKING NEWS',
+                          'Breaking News'.tr,
                           style: AppTheme.bodyLarge.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -255,7 +260,7 @@ class _NewsScreenState extends State<NewsScreen> {
                               ),
                               const SizedBox(height: AppTheme.spacingM),
                               Text(
-                                'No news available',
+                                'No News Available'.tr,
                                 style: AppTheme.bodyLarge.copyWith(
                                   color: AppTheme.textSecondary,
                                 ),
@@ -348,7 +353,7 @@ class _NewsScreenState extends State<NewsScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Image not available',
+                            'Image Not Available'.tr,
                             style: AppTheme.bodyMedium.copyWith(
                               color: AppTheme.textSecondary,
                             ),
@@ -372,7 +377,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        'BREAKING',
+                        'Breaking'.tr,
                         style: AppTheme.caption.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

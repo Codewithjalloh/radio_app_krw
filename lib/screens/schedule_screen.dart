@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
+import '../services/translation_service.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -11,7 +12,7 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
   int _selectedDay = 0;
-  final List<String> _days = ['Today', 'Tomorrow', 'This Week'];
+  final List<String> _days = ['Today'.tr, 'Tomorrow'.tr, 'This Week'.tr];
 
   final List<Map<String, dynamic>> _todaySchedule = [
     {

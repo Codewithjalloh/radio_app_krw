@@ -367,8 +367,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         FontAwesomeIcons.questionCircle,
                         [
                           _buildSettingItem(
-                            'Help Center',
-                            'Get help and support',
+                            'Help Center'.tr,
+                            'Get Help And Support'.tr,
                             FontAwesomeIcons.lifeRing,
                             () => Navigator.push(
                               context,
@@ -378,8 +378,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           _buildSettingItem(
-                            'Contact Us',
-                            'Reach out to our team',
+                            'Contact Us'.tr,
+                            'Reach Out To Our Team'.tr,
                             FontAwesomeIcons.envelope,
                             () => Navigator.push(
                               context,
@@ -389,8 +389,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           _buildSettingItem(
-                            'About KT Radio',
-                            'Learn more about our app',
+                            'About KT Radio'.tr,
+                            'Learn More About Our App'.tr,
                             FontAwesomeIcons.infoCircle,
                             () => Navigator.push(
                               context,
@@ -400,8 +400,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           _buildSettingItem(
-                            'Privacy Policy',
-                            'How we protect your data',
+                            'Privacy Policy'.tr,
+                            'How We Protect Your Data'.tr,
                             FontAwesomeIcons.shieldAlt,
                             () => Navigator.push(
                               context,
@@ -411,8 +411,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           _buildSettingItem(
-                            'Terms of Service',
-                            'Our terms and conditions',
+                            'Terms Of Service'.tr,
+                            'Our Terms And Conditions'.tr,
                             FontAwesomeIcons.fileContract,
                             () => Navigator.push(
                               context,
@@ -432,8 +432,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         FontAwesomeIcons.bullhorn,
                         [
                           _buildSettingItem(
-                            'Advertise with Us',
-                            'Promote your business on KT Radio',
+                            'Advertise With Us'.tr,
+                            'Promote Your Business On KT Radio'.tr,
                             FontAwesomeIcons.bullhorn,
                             () => Navigator.push(
                               context,
@@ -443,8 +443,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           _buildSettingItem(
-                            'Partnership Opportunities',
-                            'Explore collaboration options',
+                            'Partnership Opportunities'.tr,
+                            'Explore Collaboration Options'.tr,
                             FontAwesomeIcons.handshake,
                             () => Navigator.push(
                               context,
@@ -464,8 +464,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         FontAwesomeIcons.chartLine,
                         [
                           _buildSettingItem(
-                            'User Analytics',
-                            'View detailed user insights',
+                            'User Analytics'.tr,
+                            'View Detailed User Insights'.tr,
                             FontAwesomeIcons.chartBar,
                             () => Navigator.push(
                               context,
@@ -592,16 +592,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text('Coming Soon', style: AppTheme.heading4),
+            title: Text('Coming Soon'.tr, style: AppTheme.heading4),
             content: Text(
-              'This feature will be available in a future update.',
+              'This Feature Will Be Available In A Future Update'.tr,
               style: AppTheme.bodyMedium,
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text(
-                  'OK',
+                  'OK'.tr,
                   style: AppTheme.bodyMedium.copyWith(
                     color: AppTheme.primaryColor,
                   ),
