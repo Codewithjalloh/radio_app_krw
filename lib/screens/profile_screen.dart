@@ -276,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       // Account Settings
-                      _buildSection('account'.tr, FontAwesomeIcons.userCog, [
+                      _buildSection('Account'.tr, FontAwesomeIcons.userCog, [
                         _buildSettingItem(
                           'Edit Profile'.tr,
                           'Update Personal Info'.tr,
@@ -363,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Support & Info
                       _buildSection(
-                        'Support & Information',
+                        'Support Information'.tr,
                         FontAwesomeIcons.questionCircle,
                         [
                           _buildSettingItem(
@@ -428,7 +428,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Business & Advertising
                       _buildSection(
-                        'Business & Advertising',
+                        'Business Advertising'.tr,
                         FontAwesomeIcons.bullhorn,
                         [
                           _buildSettingItem(
@@ -459,19 +459,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: AppTheme.spacingL),
 
                       // Analytics
-                      _buildSection('Analytics', FontAwesomeIcons.chartLine, [
-                        _buildSettingItem(
-                          'User Analytics',
-                          'View detailed user insights',
-                          FontAwesomeIcons.chartBar,
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AnalyticsScreen(),
+                      _buildSection(
+                        'User Analytics'.tr,
+                        FontAwesomeIcons.chartLine,
+                        [
+                          _buildSettingItem(
+                            'User Analytics',
+                            'View detailed user insights',
+                            FontAwesomeIcons.chartBar,
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AnalyticsScreen(),
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
 
                       const SizedBox(height: AppTheme.spacingL),
 
