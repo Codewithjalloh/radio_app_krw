@@ -159,7 +159,7 @@ class AboutScreen extends StatelessWidget {
 
                             _buildFeatureItem(
                               FontAwesomeIcons.chartBar,
-                              'User Analytics',
+                              'User Analytics Admin',
                               'Track your listening habits',
                             ),
 

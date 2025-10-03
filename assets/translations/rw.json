@@ -213,5 +213,11 @@
   "Feedback Submitted Successfully": "Icyitonderwa cyoherejwe neza!",
   "Your feedback helps us improve KT Radio. We read every message and appreciate your input!": "Icyitonderwa cyawe cyadufasha gukoresha KT Radio neza. Dusoma ubutumwa bwose kandi dushimira ibyo utanga!",
   "Share your thoughts and suggestions": "Sangira ibitekerezo byawe n'ibitekerezo",
-  "Help us improve KT Radio with your thoughts and suggestions": "Dufashe gukoresha KT Radio neza dushyira hamwe ibitekerezo byawe n'ibitekerezo"
+  "Help us improve KT Radio with your thoughts and suggestions": "Dufashe gukoresha KT Radio neza dushyira hamwe ibitekerezo byawe n'ibitekerezo",
+  "Connected": "Byihuze",
+  "Disconnected": "Byahagaritse",
+  "Quality": "Ubwiza",
+  "Low (64kbps)": "Hasi (64kbps)",
+  "Medium (128kbps)": "Hagati (128kbps)",
+  "High (320kbps)": "Hejuru (320kbps)"
 }

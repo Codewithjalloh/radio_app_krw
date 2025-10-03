@@ -213,5 +213,11 @@
   "Feedback Submitted Successfully": "Feedback submitted successfully!",
   "Your feedback helps us improve KT Radio. We read every message and appreciate your input!": "Your feedback helps us improve KT Radio. We read every message and appreciate your input!",
   "Share your thoughts and suggestions": "Share your thoughts and suggestions",
-  "Help us improve KT Radio with your thoughts and suggestions": "Help us improve KT Radio with your thoughts and suggestions"
+  "Help us improve KT Radio with your thoughts and suggestions": "Help us improve KT Radio with your thoughts and suggestions",
+  "Connected": "Connected",
+  "Disconnected": "Disconnected",
+  "Quality": "Quality",
+  "Low (64kbps)": "Low (64kbps)",
+  "Medium (128kbps)": "Medium (128kbps)",
+  "High (320kbps)": "High (320kbps)"
 }

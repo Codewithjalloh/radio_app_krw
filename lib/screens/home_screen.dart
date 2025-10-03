@@ -19,6 +19,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<String> _userLanguages = [];
   bool _languagesLoaded = false;
 
+  // Radio Player Controls
+  double _volume = 0.7;
+  String _audioQuality = 'High';
+  bool _isMuted = false;
+  bool _isFavorite = false;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +70,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       _pulseController.stop();
       _pulseController.reset();
     }
+  }
+
+  void _toggleMute() {
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+  }
+
+  void _changeVolume(double value) {
+    setState(() {
+      _volume = value;
+      if (_volume > 0) {
+        _isMuted = false;
+      }
+    });
+  }
+
+  void _changeAudioQuality(String quality) {
+    setState(() {
+      _audioQuality = quality;
+    });
   }
 
   @override
@@ -341,30 +374,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   },
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
 
-                // Control Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildControlButton(
-                      icon: FontAwesomeIcons.volumeHigh,
-                      onTap: () {},
-                    ),
-                    _buildControlButton(
-                      icon: FontAwesomeIcons.share,
-                      onTap: () {},
-                    ),
-                    _buildControlButton(
-                      icon: FontAwesomeIcons.heart,
-                      onTap: () {},
-                    ),
-                    _buildControlButton(
-                      icon: FontAwesomeIcons.list,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
+                // Enhanced Radio Player Controls
+                _buildRadioPlayerControls(),
 
                 const SizedBox(height: 40),
 
@@ -409,26 +422,236 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildControlButton({
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildRadioPlayerControls() {
     return Container(
-      width: 50,
-      height: 50,
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppTheme.backgroundCard,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppTheme.borderLight, width: 1),
-        boxShadow: AppTheme.shadowSmall,
+        boxShadow: AppTheme.shadowMedium,
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(25),
-          onTap: onTap,
-          child: Center(
-            child: Icon(icon, color: AppTheme.textSecondary, size: 20),
+      child: Column(
+        children: [
+          // Volume Control
+          Row(
+            children: [
+              Icon(
+                _isMuted
+                    ? FontAwesomeIcons.volumeXmark
+                    : FontAwesomeIcons.volumeHigh,
+                color: _isMuted ? AppTheme.errorColor : AppTheme.textSecondary,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    activeTrackColor: AppTheme.primaryColor,
+                    inactiveTrackColor: AppTheme.borderLight,
+                    thumbColor: AppTheme.primaryColor,
+                    overlayColor: AppTheme.primaryColor.withOpacity(0.2),
+                    trackHeight: 4,
+                  ),
+                  child: Slider(
+                    value: _isMuted ? 0.0 : _volume,
+                    onChanged: _changeVolume,
+                    min: 0.0,
+                    max: 1.0,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              GestureDetector(
+                onTap: _toggleMute,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color:
+                        _isMuted
+                            ? AppTheme.errorColor.withOpacity(0.1)
+                            : AppTheme.primaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
+                    color:
+                        _isMuted ? AppTheme.errorColor : AppTheme.primaryColor,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+
+          // Audio Quality and Action Buttons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Audio Quality Selector
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppTheme.primaryColor.withOpacity(0.3),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.music,
+                      color: AppTheme.primaryColor,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      _audioQuality,
+                      style: AppTheme.bodyMedium.copyWith(
+                        color: AppTheme.primaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    PopupMenuButton<String>(
+                      icon: Icon(
+                        FontAwesomeIcons.chevronDown,
+                        color: AppTheme.primaryColor,
+                        size: 12,
+                      ),
+                      onSelected: _changeAudioQuality,
+                      itemBuilder:
+                          (context) => [
+                            const PopupMenuItem(
+                              value: 'Low',
+                              child: Text('Low (64kbps)'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'Medium',
+                              child: Text('Medium (128kbps)'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'High',
+                              child: Text('High (320kbps)'),
+                            ),
+                          ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // Action Buttons
+              Row(
+                children: [
+                  _buildActionButton(
+                    icon:
+                        _isFavorite
+                            ? FontAwesomeIcons.solidHeart
+                            : FontAwesomeIcons.heart,
+                    isActive: _isFavorite,
+                    onTap: _toggleFavorite,
+                  ),
+                  const SizedBox(width: 12),
+                  _buildActionButton(
+                    icon: FontAwesomeIcons.share,
+                    onTap: () {
+                      // Share functionality
+                    },
+                  ),
+                  const SizedBox(width: 12),
+                  _buildActionButton(
+                    icon: FontAwesomeIcons.list,
+                    onTap: () {
+                      // Playlist functionality
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Status Indicators
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Connection Status
+              Row(
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color:
+                          _isPlaying
+                              ? AppTheme.secondaryColor
+                              : AppTheme.textTertiary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    _isPlaying ? 'Connected'.tr : 'Disconnected'.tr,
+                    style: AppTheme.bodySmall.copyWith(
+                      color:
+                          _isPlaying
+                              ? AppTheme.secondaryColor
+                              : AppTheme.textTertiary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+
+              // Audio Quality Info
+              Text(
+                '${_audioQuality} Quality'.tr,
+                style: AppTheme.bodySmall.copyWith(
+                  color: AppTheme.textTertiary,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required VoidCallback onTap,
+    bool isActive = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: isActive ? AppTheme.primaryColor : AppTheme.backgroundElevated,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isActive ? AppTheme.primaryColor : AppTheme.borderLight,
+            width: 1,
+          ),
+          boxShadow: AppTheme.shadowSmall,
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: isActive ? Colors.white : AppTheme.textSecondary,
+            size: 18,
           ),
         ),
       ),
