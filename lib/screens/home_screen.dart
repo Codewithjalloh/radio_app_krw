@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
+import '../services/translation_service.dart';
+import 'language_settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _isPlaying = false;
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
+  List<String> _userLanguages = [];
+  bool _languagesLoaded = false;
 
   @override
   void initState() {
@@ -24,6 +29,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
+    _loadUserLanguages();
+  }
+
+  Future<void> _loadUserLanguages() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final languages = prefs.getStringList('userLanguagePreferences') ?? [];
+      setState(() {
+        _userLanguages = languages;
+        _languagesLoaded = true;
+      });
+    } catch (e) {
+      setState(() {
+        _languagesLoaded = true;
+      });
+    }
   }
 
   @override
@@ -103,46 +124,101 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('KT Radio', style: AppTheme.heading3),
+                            Text('App Name'.tr, style: AppTheme.heading3),
                             Text(
-                              '96.7 FM - Real Talk, Great Music',
+                              'Radio Tagline'.tr,
                               style: AppTheme.bodyMedium.copyWith(
                                 color: AppTheme.textSecondary,
                               ),
                             ),
+                            if (_languagesLoaded &&
+                                _userLanguages.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.language,
+                                    size: 12,
+                                    color: AppTheme.textTertiary,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    _userLanguages.take(2).join(', ') +
+                                        (_userLanguages.length > 2
+                                            ? '...'
+                                            : ''),
+                                    style: AppTheme.caption.copyWith(
+                                      color: AppTheme.textTertiary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFe94560),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 8,
-                              height: 8,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFe94560),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  'live'.tr,
+                                  style: AppTheme.caption.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          const LanguageSettingsScreen(),
+                                ),
+                              );
+                              // Reload languages when returning from settings
+                              _loadUserLanguages();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: AppTheme.backgroundCard,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: AppTheme.borderLight),
+                              ),
+                              child: Icon(
+                                FontAwesomeIcons.language,
+                                color: AppTheme.primaryColor,
+                                size: 16,
                               ),
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'LIVE',
-                              style: AppTheme.caption.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -161,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: Column(
                     children: [
                       Text(
-                        'Now Playing',
+                        'Now Playing'.tr,
                         style: AppTheme.bodyLarge.copyWith(
                           color: AppTheme.textSecondary,
                           fontWeight: FontWeight.w500,
@@ -298,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Popular Shows', style: AppTheme.heading4),
+                      Text('Popular Shows'.tr, style: AppTheme.heading4),
                       const SizedBox(height: 20),
                       _buildShowCard(
                         'Impamba y\'umunsi',

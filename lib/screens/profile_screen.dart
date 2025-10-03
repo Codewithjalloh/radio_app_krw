@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../services/translation_service.dart';
 import 'login_screen.dart';
 import 'analytics_screen.dart';
 import 'help_screen.dart';
@@ -15,6 +16,7 @@ import 'change_password_screen.dart';
 import 'account_settings_screen.dart';
 import 'advertise_screen.dart';
 import 'partnership_screen.dart';
+import 'language_settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -91,9 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Profile', style: AppTheme.heading3),
+                            Text('Profile'.tr, style: AppTheme.heading3),
                             Text(
-                              'Manage your account & preferences',
+                              'Manage Account Preferences'.tr,
                               style: AppTheme.bodyMedium.copyWith(
                                 color: AppTheme.textSecondary,
                               ),
@@ -212,8 +214,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     Text(
                                       _isLoggedIn
-                                          ? 'Premium Member'
-                                          : 'Guest User',
+                                          ? 'Premium Member'.tr
+                                          : 'Guest User'.tr,
                                       style: AppTheme.heading4.copyWith(
                                         color:
                                             _isLoggedIn
@@ -225,8 +227,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     const SizedBox(height: AppTheme.spacingXS),
                                     Text(
                                       _isLoggedIn
-                                          ? 'Enjoy exclusive features and benefits'
-                                          : 'Sign up to unlock premium features',
+                                          ? 'Enjoy Exclusive Features'.tr
+                                          : 'Signup Unlock Premium'.tr,
                                       style: AppTheme.bodySmall.copyWith(
                                         color:
                                             _isLoggedIn
@@ -274,10 +276,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       // Account Settings
-                      _buildSection('Account', FontAwesomeIcons.userCog, [
+                      _buildSection('account'.tr, FontAwesomeIcons.userCog, [
                         _buildSettingItem(
-                          'Edit Profile',
-                          'Update your personal information',
+                          'Edit Profile'.tr,
+                          'Update Personal Info'.tr,
                           FontAwesomeIcons.userEdit,
                           () => Navigator.push(
                             context,
@@ -287,8 +289,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         _buildSettingItem(
-                          'Change Password',
-                          'Update your account security',
+                          'Change Password'.tr,
+                          'Update Account Security'.tr,
                           FontAwesomeIcons.lock,
                           () => Navigator.push(
                             context,
@@ -299,8 +301,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         _buildSettingItem(
-                          'Account Settings',
-                          'Manage your account preferences',
+                          'Account Settings'.tr,
+                          'Manage Account Preferences'.tr,
                           FontAwesomeIcons.cog,
                           () => Navigator.push(
                             context,
@@ -316,27 +318,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // App Settings
                       _buildSection(
-                        'App Settings',
+                        'App Settings'.tr,
                         FontAwesomeIcons.mobileAlt,
                         [
+                          _buildSettingItem(
+                            'Language Settings'.tr,
+                            'Manage Language Preferences'.tr,
+                            FontAwesomeIcons.language,
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => const LanguageSettingsScreen(),
+                              ),
+                            ),
+                          ),
                           _buildSwitchItem(
-                            'Push Notifications',
-                            'Receive updates and alerts',
+                            'Push Notifications'.tr,
+                            'Receive Updates Alerts'.tr,
                             FontAwesomeIcons.bell,
                             _notificationsEnabled,
                             (value) =>
                                 setState(() => _notificationsEnabled = value),
                           ),
                           _buildSwitchItem(
-                            'Auto Play',
-                            'Automatically play radio on app open',
+                            'Auto Play'.tr,
+                            'Auto Play Radio Description'.tr,
                             FontAwesomeIcons.play,
                             _autoPlayEnabled,
                             (value) => setState(() => _autoPlayEnabled = value),
                           ),
                           _buildSwitchItem(
-                            'Data Saving',
-                            'Reduce data usage for streaming',
+                            'Data Saving'.tr,
+                            'Reduce Data Usage Description'.tr,
                             FontAwesomeIcons.wifi,
                             _dataSavingEnabled,
                             (value) =>
@@ -464,7 +478,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       // Logout Button
                       if (_isLoggedIn)
                         CustomButton(
-                          text: 'Sign Out',
+                          text: 'Sign Out'.tr,
                           onPressed: _logout,
                           isOutlined: true,
                           icon: FontAwesomeIcons.signOutAlt,

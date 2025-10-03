@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
+import '../services/translation_service.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
@@ -19,7 +20,7 @@ class _NewsScreenState extends State<NewsScreen> {
           'Tanzania: Abantu 38 baguye mu mpanuka ya bisi zagonganye zirashya',
       'category': 'Amakuru',
       'time': 'June 30, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=1',
       'isBreaking': true,
       'summary':
           'Abantu 38 bapfuye mu mpanuka ya bisi zagonganye mu gihugu cya Tanzania...',
@@ -28,7 +29,7 @@ class _NewsScreenState extends State<NewsScreen> {
       'title': 'Nyanza: Ingabo za EAC zirimo kuvura abaturage ku buntu',
       'category': 'Amakuru',
       'time': 'June 30, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=2',
       'isBreaking': false,
       'summary':
           'Ingabo za East African Community zirimo gufasha abaturage ba Nyanza...',
@@ -38,7 +39,7 @@ class _NewsScreenState extends State<NewsScreen> {
           'Chorale de Kigali yateguje igitaramo cy\'amateka ku munsi mpuzamahanga w\'umuziki',
       'category': 'Amakuru',
       'time': 'June 20, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=3',
       'isBreaking': false,
       'summary':
           'Chorale de Kigali yateguye igitaramo gikomeye ku munsi mpuzamahanga w\'umuziki...',
@@ -47,30 +48,54 @@ class _NewsScreenState extends State<NewsScreen> {
       'title': 'Ingabo z\'u Rwanda zungutse abandi basirikare',
       'category': 'Amakuru',
       'time': 'June 19, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=4',
       'isBreaking': false,
       'summary':
-          'Ingabo z\'u Rwanda zungutse abandi basirikare mu gikorwa cy\'amahoro...',
+          'Ingabo z\'u Rwanda zungutse abandi basirikare mu gikorwa cyo gufasha...',
     },
     {
-      'title': 'Police HC yerekeje muri Kenya mu irushanwa rya ECAHF',
+      'title': 'Rwanda: Umukino wa basketball w\'abagore w\'u Rwanda watsinze',
       'category': 'Sports',
       'time': 'June 18, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=5',
       'isBreaking': false,
       'summary':
-          'Police HC yerekeje muri Kenya mu irushanwa rya East and Central Africa Handball Federation...',
+          'Umukino wa basketball w\'abagore w\'u Rwanda watsinze mu gikorwa cya...',
     },
     {
-      'title': 'Huye: Umugabo yafashwe acuruza inyama z\'imbwa mu isoko',
-      'category': 'Ibyahise',
+      'title': 'Kigali: Umudugudu wa Kimisagara wavuguruye',
+      'category': 'Amakuru',
       'time': 'June 17, 2025',
-      'image': 'https://via.placeholder.com/300x200',
+      'image': 'https://picsum.photos/400/250?random=6',
       'isBreaking': false,
       'summary':
-          'Umugabo yafashwe mu karere ka Huye acuruza inyama z\'imbwa mu isoko...',
+          'Umudugudu wa Kimisagara wavuguruye mu gikorwa cyo gufasha abaturage...',
+    },
+    {
+      'title': 'Umuziki w\'u Rwanda: Abahanzi bavuga ku ngaruka z\'ubucuruzi',
+      'category': 'Ibyahise',
+      'time': 'June 16, 2025',
+      'image': 'https://picsum.photos/400/250?random=7',
+      'isBreaking': false,
+      'summary':
+          'Abahanzi b\'u Rwanda bavuga ku ngaruka z\'ubucuruzi ku muziki w\'u Rwanda...',
+    },
+    {
+      'title': 'Amashuri y\'u Rwanda: Ubwoba bw\'abanyeshuri',
+      'category': 'Amakuru',
+      'time': 'June 15, 2025',
+      'image': 'https://picsum.photos/400/250?random=8',
+      'isBreaking': false,
+      'summary':
+          'Amashuri y\'u Rwanda yagaragaje ubwoba bw\'abanyeshuri mu gikorwa cya...',
     },
   ];
+
+  List<Map<String, dynamic>> get _filteredNews {
+    if (_selectedCategory == 0) return _newsItems;
+    final category = _categories[_selectedCategory];
+    return _newsItems.where((item) => item['category'] == category).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,22 +107,16 @@ class _NewsScreenState extends State<NewsScreen> {
             children: [
               // Header
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(AppTheme.spacingL),
                 child: Row(
                   children: [
                     Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFe94560),
+                        color: AppTheme.primaryColor,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFe94560).withOpacity(0.3),
-                            blurRadius: 15,
-                            spreadRadius: 2,
-                          ),
-                        ],
+                        boxShadow: AppTheme.shadowGlow,
                       ),
                       child: const Icon(
                         FontAwesomeIcons.newspaper,
@@ -105,14 +124,14 @@ class _NewsScreenState extends State<NewsScreen> {
                         size: 24,
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    const SizedBox(width: AppTheme.spacingM),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('News & Updates', style: AppTheme.heading3),
+                          Text('News'.tr, style: AppTheme.heading3),
                           Text(
-                            'KT Radio News Center',
+                            'Stay informed with latest news',
                             style: AppTheme.bodyMedium.copyWith(
                               color: AppTheme.textSecondary,
                             ),
@@ -120,87 +139,58 @@ class _NewsScreenState extends State<NewsScreen> {
                         ],
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: AppTheme.backgroundCard,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        FontAwesomeIcons.magnifyingGlass,
-                        color: AppTheme.textSecondary,
-                        size: 20,
-                      ),
-                    ),
                   ],
                 ),
               ),
 
               // Breaking News Banner
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFe94560), Color(0xFFf27121)],
+              if (_newsItems.any((item) => item['isBreaking'] == true))
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacingL,
                   ),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFe94560).withOpacity(0.3),
-                      blurRadius: 15,
-                      spreadRadius: 2,
+                  padding: const EdgeInsets.all(AppTheme.spacingM),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFe94560), Color(0xFFf27121)],
                     ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppTheme.radiusM),
+                    boxShadow: AppTheme.shadowSmall,
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.exclamationTriangle,
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
+                        size: 20,
                       ),
-                      child: Text(
-                        'BREAKING',
-                        style: AppTheme.caption.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.primaryColor,
+                      const SizedBox(width: AppTheme.spacingS),
+                      Expanded(
+                        child: Text(
+                          'BREAKING NEWS',
+                          style: AppTheme.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Tanzania: Abantu 38 baguye mu mpanuka ya bisi zagonganye zirashya',
-                        style: AppTheme.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      FontAwesomeIcons.arrowRight,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: AppTheme.spacingL),
 
-              // Category Selector
+              // Category Tabs
               Container(
                 height: 50,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.spacingL,
+                ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: _categories.length,
                   itemBuilder: (context, index) {
-                    bool isSelected = _selectedCategory == index;
+                    final isSelected = _selectedCategory == index;
                     return GestureDetector(
                       onTap: () {
                         setState(() {
@@ -208,34 +198,37 @@ class _NewsScreenState extends State<NewsScreen> {
                         });
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(right: 12),
+                        margin: const EdgeInsets.only(right: AppTheme.spacingS),
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
+                          horizontal: AppTheme.spacingM,
+                          vertical: AppTheme.spacingS,
                         ),
                         decoration: BoxDecoration(
                           color:
                               isSelected
-                                  ? const Color(0xFFe94560)
-                                  : Colors.white.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(25),
+                                  ? AppTheme.primaryColor
+                                  : AppTheme.backgroundCard,
+                          borderRadius: BorderRadius.circular(AppTheme.radiusL),
                           border: Border.all(
                             color:
                                 isSelected
-                                    ? const Color(0xFFe94560)
+                                    ? AppTheme.primaryColor
                                     : AppTheme.borderLight,
-                            width: 1,
                           ),
+                          boxShadow: isSelected ? AppTheme.shadowSmall : null,
                         ),
                         child: Center(
                           child: Text(
                             _categories[index],
                             style: AppTheme.bodyMedium.copyWith(
-                              fontWeight: FontWeight.w600,
                               color:
                                   isSelected
                                       ? Colors.white
-                                      : AppTheme.textSecondary,
+                                      : AppTheme.textPrimary,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
                             ),
                           ),
                         ),
@@ -245,21 +238,42 @@ class _NewsScreenState extends State<NewsScreen> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: AppTheme.spacingL),
 
               // News List
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  itemCount: _newsItems.length,
-                  itemBuilder: (context, index) {
-                    final news = _newsItems[index];
-                    return _buildNewsItem(news, index);
-                  },
-                ),
+                child:
+                    _filteredNews.isEmpty
+                        ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.newspaper,
+                                color: AppTheme.textSecondary,
+                                size: 48,
+                              ),
+                              const SizedBox(height: AppTheme.spacingM),
+                              Text(
+                                'No news available',
+                                style: AppTheme.bodyLarge.copyWith(
+                                  color: AppTheme.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        : ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppTheme.spacingL,
+                          ),
+                          itemCount: _filteredNews.length,
+                          itemBuilder: (context, index) {
+                            final news = _filteredNews[index];
+                            return _buildNewsCard(news);
+                          },
+                        ),
               ),
-
-              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -267,53 +281,90 @@ class _NewsScreenState extends State<NewsScreen> {
     );
   }
 
-  Widget _buildNewsItem(Map<String, dynamic> news, int index) {
-    final bool isBreaking = news['isBreaking'] as bool;
-
+  Widget _buildNewsCard(Map<String, dynamic> news) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: AppTheme.spacingM),
       decoration: BoxDecoration(
         color: AppTheme.backgroundCard,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppTheme.borderLight, width: 1),
+        borderRadius: BorderRadius.circular(AppTheme.radiusM),
+        border: Border.all(color: AppTheme.borderLight),
+        boxShadow: AppTheme.shadowSmall,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // News Image
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  const Color(0xFFe94560).withOpacity(0.3),
-                  const Color(0xFFf27121).withOpacity(0.3),
-                ],
-              ),
+          // Image
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppTheme.radiusM),
+              topRight: Radius.circular(AppTheme.radiusM),
             ),
             child: Stack(
               children: [
-                Center(
-                  child: Icon(
-                    FontAwesomeIcons.newspaper,
-                    color: AppTheme.textTertiary,
-                    size: 60,
-                  ),
+                Image.network(
+                  news['image'],
+                  width: double.infinity,
+                  height: 220,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      height: 220,
+                      color: AppTheme.backgroundElevated,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value:
+                              loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            AppTheme.primaryColor,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 220,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppTheme.primaryColor.withOpacity(0.1),
+                            AppTheme.primaryColor.withOpacity(0.05),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.image,
+                            color: AppTheme.primaryColor.withOpacity(0.6),
+                            size: 48,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Image not available',
+                            style: AppTheme.bodyMedium.copyWith(
+                              color: AppTheme.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                if (isBreaking)
+                if (news['isBreaking'] == true)
                   Positioned(
-                    top: 12,
-                    left: 12,
+                    top: AppTheme.spacingS,
+                    left: AppTheme.spacingS,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
+                        horizontal: AppTheme.spacingS,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
@@ -323,24 +374,30 @@ class _NewsScreenState extends State<NewsScreen> {
                       child: Text(
                         'BREAKING',
                         style: AppTheme.caption.copyWith(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
                 Positioned(
-                  top: 12,
-                  right: 12,
+                  top: AppTheme.spacingS,
+                  right: AppTheme.spacingS,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppTheme.spacingS,
+                      vertical: 4,
                     ),
-                    child: const Icon(
-                      FontAwesomeIcons.share,
-                      color: Colors.white,
-                      size: 16,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      news['category'],
+                      style: AppTheme.caption.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -348,128 +405,44 @@ class _NewsScreenState extends State<NewsScreen> {
             ),
           ),
 
-          // News Content
+          // Content
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppTheme.spacingM),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Category and Time
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFe94560).withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        news['category'],
-                        style: AppTheme.caption.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.primaryColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Icon(
-                      FontAwesomeIcons.clock,
-                      color: Colors.white70,
-                      size: 12,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      news['time'],
-                      style: AppTheme.caption.copyWith(
-                        color: AppTheme.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 12),
-
-                // News Title
                 Text(
                   news['title'],
                   style: AppTheme.bodyLarge.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     height: 1.3,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-
-                const SizedBox(height: 8),
-
-                // News Summary
+                const SizedBox(height: AppTheme.spacingS),
                 Text(
                   news['summary'],
                   style: AppTheme.bodyMedium.copyWith(
                     color: AppTheme.textSecondary,
                     height: 1.4,
                   ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
-
-                const SizedBox(height: 16),
-
-                // Read More Button
+                const SizedBox(height: AppTheme.spacingM),
                 Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: AppTheme.backgroundCard,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: AppTheme.borderLight,
-                            width: 1,
-                          ),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(20),
-                            onTap: () {
-                              // Handle read more
-                            },
-                            child: Center(
-                              child: Text(
-                                'Read More',
-                                style: AppTheme.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    Icon(
+                      FontAwesomeIcons.clock,
+                      size: 12,
+                      color: AppTheme.textTertiary,
                     ),
-                    const SizedBox(width: 12),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFe94560),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          onTap: () {
-                            // Handle play audio
-                          },
-                          child: const Center(
-                            child: Icon(
-                              FontAwesomeIcons.play,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                        ),
+                    const SizedBox(width: 4),
+                    Text(
+                      news['time'],
+                      style: AppTheme.caption.copyWith(
+                        color: AppTheme.textTertiary,
                       ),
                     ),
                   ],

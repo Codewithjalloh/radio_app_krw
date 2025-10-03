@@ -535,57 +535,117 @@ class _PartnershipScreenState extends State<PartnershipScreen> {
   }
 
   Widget _buildPartnershipTypeGrid() {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
+    return Column(
       children:
           _partnershipTypes.map((type) {
             final isSelected = _selectedPartnershipType == type;
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedPartnershipType = type;
-                });
-              },
-              child: Container(
-                width: (MediaQuery.of(context).size.width - 80) / 2,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color:
-                      isSelected
-                          ? AppTheme.primaryColor
-                          : AppTheme.backgroundCard,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
+            return Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 12),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectedPartnershipType = type;
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
                     color:
                         isSelected
                             ? AppTheme.primaryColor
-                            : AppTheme.borderLight,
-                    width: 1,
+                            : AppTheme.backgroundCard,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color:
+                          isSelected
+                              ? AppTheme.primaryColor
+                              : AppTheme.borderLight,
+                      width: 1,
+                    ),
+                    boxShadow: isSelected ? AppTheme.shadowSmall : null,
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Icon(
-                      _getPartnershipIcon(type),
-                      color: isSelected ? Colors.white : AppTheme.primaryColor,
-                      size: 24,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      type,
-                      style: AppTheme.bodySmall.copyWith(
-                        color: isSelected ? Colors.white : AppTheme.textPrimary,
-                        fontWeight: FontWeight.w600,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected
+                                  ? Colors.white.withOpacity(0.2)
+                                  : AppTheme.primaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Icon(
+                          _getPartnershipIcon(type),
+                          color:
+                              isSelected ? Colors.white : AppTheme.primaryColor,
+                          size: 24,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              type,
+                              style: AppTheme.bodyLarge.copyWith(
+                                color:
+                                    isSelected
+                                        ? Colors.white
+                                        : AppTheme.textPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              _getPartnershipDescription(type),
+                              style: AppTheme.bodySmall.copyWith(
+                                color:
+                                    isSelected
+                                        ? Colors.white.withOpacity(0.9)
+                                        : AppTheme.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isSelected)
+                        Icon(
+                          FontAwesomeIcons.check,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             );
           }).toList(),
     );
+  }
+
+  String _getPartnershipDescription(String type) {
+    switch (type) {
+      case 'Content Collaboration':
+        return 'Create joint content and programming';
+      case 'Event Partnership':
+        return 'Co-host events and special programs';
+      case 'Sponsorship':
+        return 'Financial support for programs';
+      case 'Media Partnership':
+        return 'Cross-promotion and media sharing';
+      case 'Community Outreach':
+        return 'Social impact and community projects';
+      case 'Educational Partnership':
+        return 'Learning and development initiatives';
+      case 'Technology Partnership':
+        return 'Tech solutions and innovation';
+      default:
+        return 'Custom collaboration opportunity';
+    }
   }
 
   IconData _getPartnershipIcon(String type) {

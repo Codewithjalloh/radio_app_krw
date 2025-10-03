@@ -4,8 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/login_screen.dart';
 import 'screens/main_screen.dart';
 import 'theme/app_theme.dart';
+import 'services/translation_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await TranslationService.initialize();
   runApp(const KTRadioApp());
 }
 

@@ -4,8 +4,8 @@ import 'home_screen.dart';
 import 'schedule_screen.dart';
 import 'news_screen.dart';
 import 'profile_screen.dart';
-import 'analytics_screen.dart';
 import '../theme/app_theme.dart';
+import '../services/translation_service.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,7 +21,6 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(),
     const ScheduleScreen(),
     const NewsScreen(),
-    const AnalyticsScreen(),
     const ProfileScreen(),
   ];
 
@@ -48,11 +47,10 @@ class _MainScreenState extends State<MainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(0, FontAwesomeIcons.radio, 'Live'),
-                _buildNavItem(1, FontAwesomeIcons.calendar, 'Schedule'),
-                _buildNavItem(2, FontAwesomeIcons.newspaper, 'News'),
-                _buildNavItem(3, FontAwesomeIcons.chartLine, 'Analytics'),
-                _buildNavItem(4, FontAwesomeIcons.user, 'Profile'),
+                _buildNavItem(0, FontAwesomeIcons.radio, 'live'.tr),
+                _buildNavItem(1, FontAwesomeIcons.calendar, 'schedule'.tr),
+                _buildNavItem(2, FontAwesomeIcons.newspaper, 'news'.tr),
+                _buildNavItem(3, FontAwesomeIcons.user, 'profile'.tr),
               ],
             ),
           ),

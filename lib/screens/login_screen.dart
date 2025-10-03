@@ -5,6 +5,7 @@ import 'main_screen.dart';
 import 'registration_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../services/translation_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -93,10 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: AppTheme.spacingL),
-                      Text('KT Radio', style: AppTheme.heading2),
+                      Text('App Name'.tr, style: AppTheme.heading2),
                       const SizedBox(height: AppTheme.spacingS),
                       Text(
-                        '96.7 FM - Real Talk, Great Music',
+                        'Radio Tagline'.tr,
                         style: AppTheme.bodyLarge.copyWith(
                           color: AppTheme.textSecondary,
                         ),
@@ -116,16 +117,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       CustomTextField(
                         controller: _emailController,
-                        label: 'Email Address',
-                        hint: 'Enter your email',
+                        label: 'Email Address'.tr,
+                        hint: 'Enter Your Email'.tr,
                         prefixIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return 'Please Enter Email'.tr;
                           }
                           if (!value.contains('@')) {
-                            return 'Please enter a valid email';
+                            return 'Please Enter Valid Email'.tr;
                           }
                           return null;
                         },
@@ -135,8 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       CustomTextField(
                         controller: _passwordController,
-                        label: 'Password',
-                        hint: 'Enter your password',
+                        label: 'Password'.tr,
+                        hint: 'Enter Your Password'.tr,
                         prefixIcon: Icons.lock_outline,
                         obscureText: _obscurePassword,
                         suffixIcon: IconButton(
@@ -154,10 +155,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return 'Please Enter Password'.tr;
                           }
                           if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
+                            return 'Password Min Length'.tr;
                           }
                           return null;
                         },
@@ -166,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppTheme.spacingXL),
 
                       CustomButton(
-                        text: 'Login',
+                        text: 'login'.tr,
                         onPressed: _isLoading ? null : _login,
                         isLoading: _isLoading,
                         icon: FontAwesomeIcons.rightToBracket,
@@ -175,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppTheme.spacingL),
 
                       CustomButton(
-                        text: 'Create Account ',
+                        text: 'Create Account'.tr,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -202,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                         child: Text(
-                          'Continue as Guest',
+                          'Continue As Guest'.tr,
                           style: AppTheme.bodyLarge.copyWith(
                             color: AppTheme.textSecondary,
                             decoration: TextDecoration.underline,

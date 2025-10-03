@@ -10,6 +10,7 @@ class UserModel {
   final String district;
   final String locationType; // Urban/Rural
   final List<String> languagePreferences;
+  final Map<String, String> languageProficiencies;
   final List<String> favoriteShowTypes;
   final List<String> listeningTimes;
   final String deviceType;
@@ -38,6 +39,7 @@ class UserModel {
     required this.district,
     required this.locationType,
     required this.languagePreferences,
+    required this.languageProficiencies,
     required this.favoriteShowTypes,
     required this.listeningTimes,
     required this.deviceType,
@@ -68,6 +70,7 @@ class UserModel {
       'district': district,
       'locationType': locationType,
       'languagePreferences': languagePreferences,
+      'languageProficiencies': languageProficiencies,
       'favoriteShowTypes': favoriteShowTypes,
       'listeningTimes': listeningTimes,
       'deviceType': deviceType,
@@ -99,6 +102,9 @@ class UserModel {
       district: json['district'],
       locationType: json['locationType'],
       languagePreferences: List<String>.from(json['languagePreferences']),
+      languageProficiencies: Map<String, String>.from(
+        json['languageProficiencies'] ?? {},
+      ),
       favoriteShowTypes: List<String>.from(json['favoriteShowTypes']),
       listeningTimes: List<String>.from(json['listeningTimes']),
       deviceType: json['deviceType'],

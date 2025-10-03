@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 import '../theme/app_theme.dart';
-import '../widgets/custom_widgets.dart';
+import '../widgets/language_preferences_widget.dart';
+import '../services/translation_service.dart';
 import 'main_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -31,6 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String _selectedDistrict = '';
   String _selectedLocationType = '';
   List<String> _selectedLanguages = [];
+  Map<String, String> _languageProficiencies = {};
   List<String> _selectedShowTypes = [];
   List<String> _selectedListeningTimes = [];
   String _selectedDeviceType = '';
@@ -89,6 +91,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       district: _selectedDistrict,
       locationType: _selectedLocationType,
       languagePreferences: _selectedLanguages,
+      languageProficiencies: _languageProficiencies,
       favoriteShowTypes: _selectedShowTypes,
       listeningTimes: _selectedListeningTimes,
       deviceType: _selectedDeviceType,
@@ -172,7 +175,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Join KT Radio', style: AppTheme.heading3),
+                          Text('Join KT Radio'.tr, style: AppTheme.heading3),
                           Text(
                             'Step ${_currentStep + 1} of $_totalSteps',
                             style: AppTheme.bodyMedium.copyWith(
@@ -312,7 +315,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Personal Information', style: AppTheme.heading4),
+            Text('Personal Information'.tr, style: AppTheme.heading4),
             const SizedBox(height: 20),
 
             // Name fields
@@ -400,7 +403,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Location Information', style: AppTheme.heading4),
+            Text('Location Information'.tr, style: AppTheme.heading4),
             const SizedBox(height: 20),
 
             // Province
@@ -470,27 +473,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Radio Preferences', style: AppTheme.heading4),
+            Text('Radio Preferences'.tr, style: AppTheme.heading4),
             const SizedBox(height: 20),
 
             // Language Preferences
-            Text(
-              'Language Preferences (Select all that apply)',
-              style: AppTheme.bodyLarge.copyWith(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 15),
-            _buildMultiSelectGrid(
-              UserDataConstants.languages,
-              _selectedLanguages,
-              (value) {
+            LanguagePreferencesWidget(
+              selectedLanguages: _selectedLanguages,
+              languageProficiencies: _languageProficiencies,
+              onLanguagesChanged: (languages) {
                 setState(() {
-                  if (_selectedLanguages.contains(value)) {
-                    _selectedLanguages.remove(value);
-                  } else {
-                    _selectedLanguages.add(value);
-                  }
+                  _selectedLanguages = languages;
                 });
               },
+              onProficienciesChanged: (proficiencies) {
+                setState(() {
+                  _languageProficiencies = proficiencies;
+                });
+              },
+              isRequired: true,
             ),
 
             const SizedBox(height: 30),
@@ -585,7 +585,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Complete Your Profile', style: AppTheme.heading4),
+            Text('Complete Your Profile'.tr, style: AppTheme.heading4),
             const SizedBox(height: 20),
 
             // Discovery Source
