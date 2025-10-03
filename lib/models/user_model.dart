@@ -18,8 +18,10 @@ class UserModel {
   final List<String> interests;
   final String listeningFrequency;
   final String? occupation;
+  final String? customOccupation;
   final String? educationLevel;
   final String? maritalStatus;
+  final String? earningRange;
   final bool newsletterSubscription;
   final DateTime registrationDate;
   final DateTime lastLogin;
@@ -44,8 +46,10 @@ class UserModel {
     required this.interests,
     required this.listeningFrequency,
     this.occupation,
+    this.customOccupation,
     this.educationLevel,
     this.maritalStatus,
+    this.earningRange,
     required this.newsletterSubscription,
     required this.registrationDate,
     required this.lastLogin,
@@ -72,8 +76,10 @@ class UserModel {
       'interests': interests,
       'listeningFrequency': listeningFrequency,
       'occupation': occupation,
+      'customOccupation': customOccupation,
       'educationLevel': educationLevel,
       'maritalStatus': maritalStatus,
+      'earningRange': earningRange,
       'newsletterSubscription': newsletterSubscription,
       'registrationDate': registrationDate.toIso8601String(),
       'lastLogin': lastLogin.toIso8601String(),
@@ -101,8 +107,10 @@ class UserModel {
       interests: List<String>.from(json['interests']),
       listeningFrequency: json['listeningFrequency'],
       occupation: json['occupation'],
+      customOccupation: json['customOccupation'],
       educationLevel: json['educationLevel'],
       maritalStatus: json['maritalStatus'],
+      earningRange: json['earningRange'],
       newsletterSubscription: json['newsletterSubscription'],
       registrationDate: DateTime.parse(json['registrationDate']),
       lastLogin: DateTime.parse(json['lastLogin']),
@@ -265,5 +273,15 @@ class UserDataConstants {
     'Married',
     'Divorced',
     'Widowed',
+  ];
+
+  static const List<String> earningRanges = [
+    'Under 50,000 RWF',
+    '50,000 - 100,000 RWF',
+    '100,000 - 200,000 RWF',
+    '200,000 - 500,000 RWF',
+    '500,000 - 1,000,000 RWF',
+    'Over 1,000,000 RWF',
+    'Prefer not to say',
   ];
 }

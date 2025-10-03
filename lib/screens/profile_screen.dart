@@ -10,6 +10,11 @@ import 'contact_screen.dart';
 import 'about_screen.dart';
 import 'privacy_screen.dart';
 import 'terms_screen.dart';
+import 'edit_profile_screen.dart';
+import 'change_password_screen.dart';
+import 'account_settings_screen.dart';
+import 'advertise_screen.dart';
+import 'partnership_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -133,30 +138,125 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: AppTheme.textSecondary,
                           ),
                         ),
-                        const SizedBox(height: AppTheme.spacingM),
+                        const SizedBox(height: AppTheme.spacingL),
+
+                        // Enhanced Premium Member Card
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppTheme.spacingM,
-                            vertical: AppTheme.spacingS,
-                          ),
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(AppTheme.spacingL),
                           decoration: BoxDecoration(
-                            color:
+                            gradient:
                                 _isLoggedIn
-                                    ? AppTheme.secondaryColor.withOpacity(0.1)
-                                    : AppTheme.borderLight,
+                                    ? const LinearGradient(
+                                      colors: [
+                                        Color(0xFFe94560),
+                                        Color(0xFFf27121),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    )
+                                    : null,
+                            color: _isLoggedIn ? null : AppTheme.backgroundCard,
                             borderRadius: BorderRadius.circular(
-                              AppTheme.radiusRound,
+                              AppTheme.radiusL,
                             ),
-                          ),
-                          child: Text(
-                            _isLoggedIn ? 'Premium Member' : 'Guest User',
-                            style: AppTheme.caption.copyWith(
+                            border: Border.all(
                               color:
                                   _isLoggedIn
-                                      ? AppTheme.secondaryColor
-                                      : AppTheme.textSecondary,
-                              fontWeight: FontWeight.w600,
+                                      ? Colors.transparent
+                                      : AppTheme.borderLight,
+                              width: 1,
                             ),
+                            boxShadow:
+                                _isLoggedIn
+                                    ? [
+                                      BoxShadow(
+                                        color: const Color(
+                                          0xFFe94560,
+                                        ).withOpacity(0.3),
+                                        blurRadius: 15,
+                                        spreadRadius: 2,
+                                      ),
+                                    ]
+                                    : AppTheme.shadowSmall,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color:
+                                      _isLoggedIn
+                                          ? Colors.white.withOpacity(0.2)
+                                          : AppTheme.primaryColor.withOpacity(
+                                            0.1,
+                                          ),
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Icon(
+                                  _isLoggedIn
+                                      ? FontAwesomeIcons.crown
+                                      : FontAwesomeIcons.user,
+                                  color:
+                                      _isLoggedIn
+                                          ? Colors.white
+                                          : AppTheme.primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                              const SizedBox(width: AppTheme.spacingM),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _isLoggedIn
+                                          ? 'Premium Member'
+                                          : 'Guest User',
+                                      style: AppTheme.heading4.copyWith(
+                                        color:
+                                            _isLoggedIn
+                                                ? Colors.white
+                                                : AppTheme.textPrimary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: AppTheme.spacingXS),
+                                    Text(
+                                      _isLoggedIn
+                                          ? 'Enjoy exclusive features and benefits'
+                                          : 'Sign up to unlock premium features',
+                                      style: AppTheme.bodySmall.copyWith(
+                                        color:
+                                            _isLoggedIn
+                                                ? Colors.white.withOpacity(0.9)
+                                                : AppTheme.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (_isLoggedIn)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppTheme.spacingS,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    'PRO',
+                                    style: AppTheme.caption.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                       ],
@@ -179,19 +279,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           'Edit Profile',
                           'Update your personal information',
                           FontAwesomeIcons.userEdit,
-                          () => _showComingSoon(),
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditProfileScreen(),
+                            ),
+                          ),
                         ),
                         _buildSettingItem(
                           'Change Password',
                           'Update your account security',
                           FontAwesomeIcons.lock,
-                          () => _showComingSoon(),
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const ChangePasswordScreen(),
+                            ),
+                          ),
                         ),
                         _buildSettingItem(
                           'Account Settings',
                           'Manage your account preferences',
                           FontAwesomeIcons.cog,
-                          () => _showComingSoon(),
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const AccountSettingsScreen(),
+                            ),
+                          ),
                         ),
                       ]),
 
@@ -287,6 +404,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const TermsScreen(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingL),
+
+                      // Business & Advertising
+                      _buildSection(
+                        'Business & Advertising',
+                        FontAwesomeIcons.bullhorn,
+                        [
+                          _buildSettingItem(
+                            'Advertise with Us',
+                            'Promote your business on KT Radio',
+                            FontAwesomeIcons.bullhorn,
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AdvertiseScreen(),
+                              ),
+                            ),
+                          ),
+                          _buildSettingItem(
+                            'Partnership Opportunities',
+                            'Explore collaboration options',
+                            FontAwesomeIcons.handshake,
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PartnershipScreen(),
                               ),
                             ),
                           ),

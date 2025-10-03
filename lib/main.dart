@@ -165,10 +165,22 @@ class _SplashScreenState extends State<SplashScreen>
                           borderRadius: BorderRadius.circular(70),
                           boxShadow: AppTheme.shadowGlow,
                         ),
-                        child: const Icon(
-                          Icons.radio,
-                          color: Colors.white,
-                          size: 70,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(70),
+                          child: Image.asset(
+                            'assets/images/kt_logo.png',
+                            width: 140,
+                            height: 140,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback to icon if image not found
+                              return const Icon(
+                                Icons.radio,
+                                color: Colors.white,
+                                size: 70,
+                              );
+                            },
+                          ),
                         ),
                       ),
 

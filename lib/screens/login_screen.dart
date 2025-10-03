@@ -74,10 +74,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(50),
                           boxShadow: AppTheme.shadowGlow,
                         ),
-                        child: const Icon(
-                          FontAwesomeIcons.radio,
-                          color: Colors.white,
-                          size: 50,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            'assets/images/kt_logo.png',
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback to icon if image not found
+                              return const Icon(
+                                FontAwesomeIcons.radio,
+                                color: Colors.white,
+                                size: 50,
+                              );
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(height: AppTheme.spacingL),
@@ -163,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: AppTheme.spacingL),
 
                       CustomButton(
-                        text: 'Create Account',
+                        text: 'Create Account ',
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -171,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        isPrimary: false,
+                        isPrimary: true,
                         icon: FontAwesomeIcons.userPlus,
                       ),
 

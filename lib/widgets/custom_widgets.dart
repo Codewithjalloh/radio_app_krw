@@ -106,7 +106,7 @@ class CustomButton extends StatelessWidget {
                                     : Colors.white,
                             size: 20,
                           ),
-                          const SizedBox(width: AppTheme.spacingS),
+                          const SizedBox(width: AppTheme.spacingM),
                         ],
                         Text(
                           text,

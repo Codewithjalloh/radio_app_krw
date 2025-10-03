@@ -39,8 +39,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   List<String> _selectedInterests = [];
   String _selectedListeningFrequency = '';
   String _selectedOccupation = '';
+  String _customOccupation = '';
   String _selectedEducationLevel = '';
   String _selectedMaritalStatus = '';
+  String _selectedEarningRange = '';
   bool _newsletterSubscription = true;
 
   @override
@@ -95,10 +97,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       interests: _selectedInterests,
       listeningFrequency: _selectedListeningFrequency,
       occupation: _selectedOccupation.isNotEmpty ? _selectedOccupation : null,
+      customOccupation: _customOccupation.isNotEmpty ? _customOccupation : null,
       educationLevel:
           _selectedEducationLevel.isNotEmpty ? _selectedEducationLevel : null,
       maritalStatus:
           _selectedMaritalStatus.isNotEmpty ? _selectedMaritalStatus : null,
+      earningRange:
+          _selectedEarningRange.isNotEmpty ? _selectedEarningRange : null,
       newsletterSubscription: _newsletterSubscription,
       registrationDate: DateTime.now(),
       lastLogin: DateTime.now(),
@@ -144,10 +149,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           ),
                         ],
                       ),
-                      child: const Icon(
-                        FontAwesomeIcons.userPlus,
-                        color: Colors.white,
-                        size: 24,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.asset(
+                          'assets/images/kt_logo.png',
+                          width: 24,
+                          height: 24,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Fallback to icon if image not found
+                            return const Icon(
+                              FontAwesomeIcons.userPlus,
+                              color: Colors.white,
+                              size: 24,
+                            );
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(width: 15),
@@ -568,7 +585,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Additional Information', style: AppTheme.heading4),
+            Text('Complete Your Profile', style: AppTheme.heading4),
             const SizedBox(height: 20),
 
             // Discovery Source
@@ -629,12 +646,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             const SizedBox(height: 30),
 
-            // Optional fields
+            // Additional fields
             Text(
-              'Optional Information',
+              'Additional Information',
               style: AppTheme.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.textSecondary,
+                color: AppTheme.textPrimary,
               ),
             ),
             const SizedBox(height: 15),
@@ -647,9 +664,46 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               (value) {
                 setState(() {
                   _selectedOccupation = value ?? '';
+                  if (value != 'Other') {
+                    _customOccupation =
+                        ''; // Clear custom occupation if not "Other"
+                  }
                 });
               },
             ),
+
+            // Custom Occupation Field (only show if "Other" is selected)
+            if (_selectedOccupation == 'Other') ...[
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppTheme.backgroundCard,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: AppTheme.borderLight, width: 1),
+                ),
+                child: TextFormField(
+                  initialValue: _customOccupation,
+                  onChanged: (value) {
+                    setState(() {
+                      _customOccupation = value;
+                    });
+                  },
+                  style: AppTheme.bodyLarge,
+                  decoration: InputDecoration(
+                    labelText: 'Please specify your occupation',
+                    labelStyle: AppTheme.bodyLarge.copyWith(
+                      color: AppTheme.textSecondary,
+                    ),
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.briefcase,
+                      color: AppTheme.textSecondary,
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(20),
+                  ),
+                ),
+              ),
+            ],
 
             const SizedBox(height: 20),
 
@@ -675,6 +729,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               (value) {
                 setState(() {
                   _selectedMaritalStatus = value ?? '';
+                });
+              },
+            ),
+
+            const SizedBox(height: 20),
+
+            // Earning Range
+            _buildDropdownField(
+              'Earning Range',
+              UserDataConstants.earningRanges,
+              _selectedEarningRange,
+              (value) {
+                setState(() {
+                  _selectedEarningRange = value ?? '';
                 });
               },
             ),
@@ -890,7 +958,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             label,
             style: AppTheme.bodyLarge.copyWith(color: AppTheme.textSecondary),
           ),
-          dropdownColor: const Color(0xFF1a1a2e),
+          dropdownColor: AppTheme.backgroundElevated,
           style: AppTheme.bodyLarge,
           items:
               options.map((String value) {

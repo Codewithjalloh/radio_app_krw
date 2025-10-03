@@ -63,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFe94560),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFe94560), Color(0xFFf27121)],
+                          ),
                           borderRadius: BorderRadius.circular(25),
                           boxShadow: [
                             BoxShadow(
@@ -73,10 +75,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          FontAwesomeIcons.radio,
-                          color: Colors.white,
-                          size: 24,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Image.asset(
+                            'assets/images/kt_logo.png',
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback to text logo if image not found
+                              return const Center(
+                                child: Text(
+                                  'KT',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(width: 15),
