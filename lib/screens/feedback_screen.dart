@@ -15,12 +15,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
 
   String _feedbackType = 'Show Feedback';
   String _rating = '5';
-  bool _isAnonymous = false;
   bool _allowContact = false;
 
   final List<String> _feedbackTypes = [
@@ -37,6 +37,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _subjectController.dispose();
     _messageController.dispose();
     super.dispose();
@@ -57,12 +58,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       // Clear form
       _nameController.clear();
       _emailController.clear();
+      _phoneController.clear();
       _subjectController.clear();
       _messageController.clear();
       setState(() {
         _feedbackType = 'Show Feedback';
         _rating = '5';
-        _isAnonymous = false;
         _allowContact = false;
       });
     }
@@ -293,6 +294,22 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               const SizedBox(height: 16),
 
               CustomTextField(
+                controller: _phoneController,
+                label: 'Phone Number'.tr,
+                hint: 'Enter your phone number'.tr,
+                prefixIcon: FontAwesomeIcons.phone,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number'.tr;
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 16),
+
+              CustomTextField(
                 controller: _subjectController,
                 label: 'Subject'.tr,
                 hint: 'Brief description of your feedback'.tr,
@@ -361,27 +378,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-
-                    // Anonymous feedback
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _isAnonymous,
-                          onChanged:
-                              (value) =>
-                                  setState(() => _isAnonymous = value ?? false),
-                          activeColor: AppTheme.primaryColor,
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Submit anonymously'.tr,
-                            style: AppTheme.bodyMedium.copyWith(
-                              color: AppTheme.textPrimary,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
 
                     // Allow contact
                     Row(
