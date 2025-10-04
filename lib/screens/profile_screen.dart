@@ -6,6 +6,7 @@ import '../widgets/custom_widgets.dart';
 import '../services/translation_service.dart';
 import 'login_screen.dart';
 import 'analytics_screen.dart';
+import 'premium_screen.dart';
 import 'help_screen.dart';
 import 'contact_screen.dart';
 import 'about_screen.dart';
@@ -754,6 +755,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ],
+                      ),
+
+                      const SizedBox(height: AppTheme.spacingL),
+
+                      // Premium Button
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFe94560), Color(0xFFf27121)],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFe94560).withOpacity(0.3),
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(16),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PremiumScreen(),
+                                ),
+                              );
+                            },
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    FontAwesomeIcons.crown,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    'Upgrade to Premium'.tr,
+                                    style: AppTheme.bodyLarge.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
 
                       const SizedBox(height: AppTheme.spacingL),
