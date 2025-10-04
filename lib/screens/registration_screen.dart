@@ -117,40 +117,106 @@ class _RegistrationScreenState extends State<RegistrationScreen>
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder:
-          (context) => Center(
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                color: AppTheme.backgroundElevated,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFFe94560),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Creating your account...'.tr,
-                    style: AppTheme.bodyLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
+      builder: (context) => Center(
+        child: Container(
+          padding: const EdgeInsets.all(40),
+          margin: const EdgeInsets.symmetric(horizontal: 40),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFe94560), Color(0xFFf27121)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFe94560).withOpacity(0.4),
+                blurRadius: 25,
+                spreadRadius: 5,
+                offset: const Offset(0, 10),
+              ),
+            ],
           ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Animated logo
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(40),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  FontAwesomeIcons.userPlus,
+                  color: Color(0xFFe94560),
+                  size: 40,
+                ),
+              ),
+              const SizedBox(height: 25),
+              
+              // Progress indicator
+              const SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 4,
+                ),
+              ),
+              const SizedBox(height: 25),
+              
+              // Title
+              Text(
+                'Creating Your Account'.tr,
+                style: AppTheme.heading3.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              
+              // Subtitle
+              Text(
+                'Please wait while we set up your profile...'.tr,
+                style: AppTheme.bodyMedium.copyWith(
+                  color: Colors.white.withOpacity(0.9),
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              
+              // Progress dots
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(3, (index) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 600),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.7),
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
 
     // Simulate processing time

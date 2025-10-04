@@ -479,11 +479,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // Analytics
                       _buildSection(
-                        'User Analytics Admin Section Only'.tr,
+                        'User Analytics Admin'.tr,
                         FontAwesomeIcons.chartLine,
                         [
                           _buildSettingItem(
-                            'User Analytics Admin Section Only'.tr,
+                            'User Analytics Admin'.tr,
                             'View Detailed User Insights'.tr,
                             FontAwesomeIcons.chartBar,
                             () => Navigator.push(
