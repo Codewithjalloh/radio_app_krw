@@ -5,6 +5,7 @@ import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
 import '../services/translation_service.dart';
 import 'login_screen.dart';
+import 'registration_screen.dart';
 import 'analytics_screen.dart';
 import 'premium_screen.dart';
 import 'help_screen.dart';
@@ -369,164 +370,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
 
-                // User Info Card
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppTheme.spacingL,
-                  ),
-                  child: CustomCard(
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundColor: AppTheme.primaryColor.withOpacity(
-                            0.1,
-                          ),
-                          child: Text(
-                            _userName.isNotEmpty
-                                ? _userName[0].toUpperCase()
-                                : 'G',
-                            style: AppTheme.heading2.copyWith(
-                              color: AppTheme.primaryColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: AppTheme.spacingM),
-                        Text(_userName, style: AppTheme.heading4),
-                        const SizedBox(height: AppTheme.spacingXS),
-                        Text(
-                          _userEmail.isNotEmpty
-                              ? _userEmail
-                              : 'guest@ktradio.rw',
-                          style: AppTheme.bodyMedium.copyWith(
-                            color: AppTheme.textSecondary,
-                          ),
-                        ),
-                        const SizedBox(height: AppTheme.spacingL),
+                // Guest Mode Banner
+                if (!_isLoggedIn) _buildGuestModeBanner(),
 
-                        // Enhanced Premium Member Card
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(AppTheme.spacingL),
-                          decoration: BoxDecoration(
-                            gradient:
-                                _isLoggedIn
-                                    ? const LinearGradient(
-                                      colors: [
-                                        Color(0xFFe94560),
-                                        Color(0xFFf27121),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    )
-                                    : null,
-                            color: _isLoggedIn ? null : AppTheme.backgroundCard,
-                            borderRadius: BorderRadius.circular(
-                              AppTheme.radiusL,
-                            ),
-                            border: Border.all(
-                              color:
-                                  _isLoggedIn
-                                      ? Colors.transparent
-                                      : AppTheme.borderLight,
-                              width: 1,
-                            ),
-                            boxShadow:
-                                _isLoggedIn
-                                    ? [
-                                      BoxShadow(
-                                        color: const Color(
-                                          0xFFe94560,
-                                        ).withOpacity(0.3),
-                                        blurRadius: 15,
-                                        spreadRadius: 2,
-                                      ),
-                                    ]
-                                    : AppTheme.shadowSmall,
+                // Premium Member Card (only for logged in users)
+                if (_isLoggedIn)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppTheme.spacingL,
+                    ),
+                    child: CustomCard(
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(AppTheme.spacingL),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFe94560), Color(0xFFf27121)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color:
-                                      _isLoggedIn
-                                          ? Colors.white.withOpacity(0.2)
-                                          : AppTheme.primaryColor.withOpacity(
-                                            0.1,
-                                          ),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: Icon(
-                                  _isLoggedIn
-                                      ? FontAwesomeIcons.crown
-                                      : FontAwesomeIcons.user,
-                                  color:
-                                      _isLoggedIn
-                                          ? Colors.white
-                                          : AppTheme.primaryColor,
-                                  size: 24,
-                                ),
+                          borderRadius: BorderRadius.circular(AppTheme.radiusL),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFe94560).withOpacity(0.3),
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(25),
                               ),
-                              const SizedBox(width: AppTheme.spacingM),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _isLoggedIn
-                                          ? 'Premium Member'.tr
-                                          : 'Guest User'.tr,
-                                      style: AppTheme.heading4.copyWith(
-                                        color:
-                                            _isLoggedIn
-                                                ? Colors.white
-                                                : AppTheme.textPrimary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: AppTheme.spacingXS),
-                                    Text(
-                                      _isLoggedIn
-                                          ? 'Enjoy Exclusive Features'.tr
-                                          : 'Signup Unlock Premium'.tr,
-                                      style: AppTheme.bodySmall.copyWith(
-                                        color:
-                                            _isLoggedIn
-                                                ? Colors.white.withOpacity(0.9)
-                                                : AppTheme.textSecondary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              child: const Icon(
+                                FontAwesomeIcons.crown,
+                                color: Colors.white,
+                                size: 24,
                               ),
-                              if (_isLoggedIn)
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: AppTheme.spacingS,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Text(
-                                    'PRO',
-                                    style: AppTheme.caption.copyWith(
+                            ),
+                            const SizedBox(width: AppTheme.spacingM),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Premium Member'.tr,
+                                    style: AppTheme.heading4.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 10,
                                     ),
                                   ),
+                                  const SizedBox(height: AppTheme.spacingXS),
+                                  Text(
+                                    'Enjoy Exclusive Features'.tr,
+                                    style: AppTheme.bodySmall.copyWith(
+                                      color: Colors.white.withOpacity(0.9),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppTheme.spacingS,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                'PRO',
+                                style: AppTheme.caption.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
                                 ),
-                            ],
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
 
                 const SizedBox(height: AppTheme.spacingL),
 
@@ -876,6 +807,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+      floatingActionButton: !_isLoggedIn ? _buildUpgradeFAB() : null,
     );
   }
 
@@ -988,6 +920,194 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
+    );
+  }
+
+  Widget _buildGuestModeBanner() {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppTheme.spacingL,
+        vertical: AppTheme.spacingM,
+      ),
+      padding: const EdgeInsets.all(AppTheme.spacingL),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFe94560), Color(0xFFf27121)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppTheme.radiusL),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFe94560).withOpacity(0.3),
+            blurRadius: 15,
+            spreadRadius: 2,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Icon(
+                  FontAwesomeIcons.user,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacingM),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Guest Mode',
+                      style: AppTheme.heading4.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Sign up for a full experience',
+                      style: AppTheme.bodyMedium.copyWith(
+                        color: Colors.white.withOpacity(0.9),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppTheme.spacingM),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(24),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegistrationScreen(),
+                          ),
+                        );
+                      },
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.userPlus,
+                              color: Color(0xFFe94560),
+                              size: 16,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Sign Up',
+                              style: AppTheme.bodyLarge.copyWith(
+                                color: const Color(0xFFe94560),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppTheme.spacingM),
+              Expanded(
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(24),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.signInAlt,
+                              color: Color(0xFFe94560),
+                              size: 16,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Sign In',
+                              style: AppTheme.bodyLarge.copyWith(
+                                color: const Color(0xFFe94560),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUpgradeFAB() {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RegistrationScreen()),
+        );
+      },
+      backgroundColor: const Color(0xFFe94560),
+      icon: const Icon(FontAwesomeIcons.crown, color: Colors.white),
+      label: Text(
+        'Upgrade to Pro',
+        style: AppTheme.bodyLarge.copyWith(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
