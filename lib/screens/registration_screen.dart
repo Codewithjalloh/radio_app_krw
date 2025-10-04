@@ -117,106 +117,109 @@ class _RegistrationScreenState extends State<RegistrationScreen>
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(
-        child: Container(
-          padding: const EdgeInsets.all(40),
-          margin: const EdgeInsets.symmetric(horizontal: 40),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFe94560), Color(0xFFf27121)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFFe94560).withOpacity(0.4),
-                blurRadius: 25,
-                spreadRadius: 5,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Animated logo
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 15,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
+      builder:
+          (context) => Center(
+            child: Container(
+              padding: const EdgeInsets.all(40),
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFe94560), Color(0xFFf27121)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                child: const Icon(
-                  FontAwesomeIcons.userPlus,
-                  color: Color(0xFFe94560),
-                  size: 40,
-                ),
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFe94560).withOpacity(0.4),
+                    blurRadius: 25,
+                    spreadRadius: 5,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
-              const SizedBox(height: 25),
-              
-              // Progress indicator
-              const SizedBox(
-                width: 50,
-                height: 50,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  strokeWidth: 4,
-                ),
-              ),
-              const SizedBox(height: 25),
-              
-              // Title
-              Text(
-                'Creating Your Account'.tr,
-                style: AppTheme.heading3.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              
-              // Subtitle
-              Text(
-                'Please wait while we set up your profile...'.tr,
-                style: AppTheme.bodyMedium.copyWith(
-                  color: Colors.white.withOpacity(0.9),
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              
-              // Progress dots
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(3, (index) {
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 600),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: 8,
-                    height: 8,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Animated logo
+                  Container(
+                    width: 80,
+                    height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(40),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 15,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
                     ),
-                  );
-                }),
+                    child: const Icon(
+                      FontAwesomeIcons.userPlus,
+                      color: Color(0xFFe94560),
+                      size: 40,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+
+                  // Progress indicator
+                  const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      strokeWidth: 4,
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+
+                  // Title
+                  SelectableText(
+                    'Creating Your Account'.tr,
+                    style: AppTheme.heading3.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                    enableInteractiveSelection: false,
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Subtitle
+                  SelectableText(
+                    'Please wait while we set up your profile...'.tr,
+                    style: AppTheme.bodyMedium.copyWith(
+                      color: Colors.white.withOpacity(0.9),
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                    enableInteractiveSelection: false,
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Progress dots
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(3, (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 600),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.7),
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
 
     // Simulate processing time
@@ -442,27 +445,22 @@ class _RegistrationScreenState extends State<RegistrationScreen>
 
           const SizedBox(height: 30),
 
-          // Name fields with improved design
-          Row(
-            children: [
-              Expanded(
-                child: _buildEnhancedTextField(
-                  controller: _firstNameController,
-                  label: 'First Name'.tr,
-                  icon: FontAwesomeIcons.user,
-                  hint: 'Enter your first name',
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildEnhancedTextField(
-                  controller: _lastNameController,
-                  label: 'Last Name'.tr,
-                  icon: FontAwesomeIcons.user,
-                  hint: 'Enter your last name',
-                ),
-              ),
-            ],
+          // First Name
+          _buildEnhancedTextField(
+            controller: _firstNameController,
+            label: 'First Name'.tr,
+            icon: FontAwesomeIcons.user,
+            hint: 'Enter your first name',
+          ),
+
+          const SizedBox(height: 24),
+
+          // Last Name
+          _buildEnhancedTextField(
+            controller: _lastNameController,
+            label: 'Last Name'.tr,
+            icon: FontAwesomeIcons.user,
+            hint: 'Enter your last name',
           ),
 
           const SizedBox(height: 24),

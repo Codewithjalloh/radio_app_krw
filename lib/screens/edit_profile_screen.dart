@@ -212,37 +212,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                               const SizedBox(height: AppTheme.spacingM),
 
-                              // Name Fields
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomTextField(
-                                      controller: _firstNameController,
-                                      label: 'First Name',
-                                      prefixIcon: FontAwesomeIcons.user,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your first name';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(width: AppTheme.spacingM),
-                                  Expanded(
-                                    child: CustomTextField(
-                                      controller: _lastNameController,
-                                      label: 'Last Name',
-                                      prefixIcon: FontAwesomeIcons.user,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter your last name';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                ],
+                              // First Name
+                              CustomTextField(
+                                controller: _firstNameController,
+                                label: 'First Name',
+                                prefixIcon: FontAwesomeIcons.user,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your first name';
+                                  }
+                                  return null;
+                                },
+                              ),
+
+                              const SizedBox(height: AppTheme.spacingM),
+
+                              // Last Name
+                              CustomTextField(
+                                controller: _lastNameController,
+                                label: 'Last Name',
+                                prefixIcon: FontAwesomeIcons.user,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your last name';
+                                  }
+                                  return null;
+                                },
                               ),
 
                               const SizedBox(height: AppTheme.spacingM),
