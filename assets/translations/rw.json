@@ -550,5 +550,15 @@
   "How Users Found Us": "Uko Abakoresha batubonye",
   "Top Interests": "Ibyifuzo by'Ingirakamaro",
   "Creating Your Account": "Gukora Konti yawe",
-  "Please wait while we set up your profile...": "Nyamuneka tegereza mugihe dukora profili yawe..."
+  "Please wait while we set up your profile...": "Nyamuneka tegereza mugihe dukora profili yawe...",
+  "Delete Account": "Gusiba Konti",
+  "Are you sure you want to delete your account?": "Urazi neza ko ushaka gusiba konti yawe?",
+  "This action cannot be undone. All your data, preferences, and listening history will be permanently deleted.": "Iki gikorwa ntigishobora guhindurwa. Amakuru yawe yose, ibyifuzo, n'amateka y'ukumva azasibwa mu buryo butazagaruka.",
+  "Type \"DELETE\" to confirm account deletion": "Andika \"SIBYA\" kugira ngo wemeze gusiba konti",
+  "Confirm Deletion": "Emeza Gusiba",
+  "To confirm account deletion, please type \"DELETE\" below:": "Kugira ngo wemeze gusiba konti, nyamuneka andika \"SIBYA\" hepfo:",
+  "Type DELETE here": "Andika SIBYA hano",
+  "Please type \"DELETE\" exactly as shown": "Nyamuneka andika \"SIBYA\" nk'uko biri",
+  "Deleting Account...": "Gusiba Konti...",
+  "Account deleted successfully": "Konti yasibwe neza"
 }

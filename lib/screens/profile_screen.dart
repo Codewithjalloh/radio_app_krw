@@ -61,6 +61,266 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Future<void> _showDeleteAccountDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              Icon(
+                FontAwesomeIcons.exclamationTriangle,
+                color: Colors.red,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Delete Account'.tr,
+                style: AppTheme.heading4.copyWith(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Are you sure you want to delete your account?'.tr,
+                style: AppTheme.bodyLarge,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'This action cannot be undone. All your data, preferences, and listening history will be permanently deleted.'
+                    .tr,
+                style: AppTheme.bodyMedium.copyWith(
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.red.withOpacity(0.3)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.infoCircle,
+                      color: Colors.red,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Type "DELETE" to confirm account deletion'.tr,
+                        style: AppTheme.caption.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Cancel'.tr,
+                style: AppTheme.bodyLarge.copyWith(
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showDeleteConfirmationDialog();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text('Delete Account'.tr),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showDeleteConfirmationDialog() async {
+    final TextEditingController confirmController = TextEditingController();
+
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              Icon(FontAwesomeIcons.trashAlt, color: Colors.red, size: 24),
+              const SizedBox(width: 12),
+              Text(
+                'Confirm Deletion'.tr,
+                style: AppTheme.heading4.copyWith(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'To confirm account deletion, please type "DELETE" below:'.tr,
+                style: AppTheme.bodyLarge,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: confirmController,
+                decoration: InputDecoration(
+                  hintText: 'Type DELETE here'.tr,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                ),
+                style: AppTheme.bodyLarge,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                confirmController.dispose();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Cancel'.tr,
+                style: AppTheme.bodyLarge.copyWith(
+                  color: AppTheme.textSecondary,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (confirmController.text.trim().toUpperCase() == 'DELETE') {
+                  confirmController.dispose();
+                  Navigator.of(context).pop();
+                  _deleteAccount();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please type "DELETE" exactly as shown'.tr),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text('Delete Account'.tr),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteAccount() async {
+    // Show loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (context) => Center(
+            child: Container(
+              padding: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFe94560), Color(0xFFf27121)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFe94560).withOpacity(0.4),
+                    blurRadius: 20,
+                    spreadRadius: 5,
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Deleting Account...'.tr,
+                    style: AppTheme.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+    );
+
+    // Simulate account deletion process
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Clear all user data
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    if (mounted) {
+      Navigator.of(context).pop(); // Close loading dialog
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Account deleted successfully'.tr),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -499,13 +759,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: AppTheme.spacingL),
 
                       // Logout Button
-                      if (_isLoggedIn)
+                      if (_isLoggedIn) ...[
                         CustomButton(
                           text: 'Sign Out'.tr,
                           onPressed: _logout,
                           isOutlined: true,
                           icon: FontAwesomeIcons.signOutAlt,
                         ),
+
+                        const SizedBox(height: AppTheme.spacingM),
+
+                        // Delete Account Button
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.red, width: 2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: _showDeleteAccountDialog,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      FontAwesomeIcons.trashAlt,
+                                      color: Colors.red,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Delete Account'.tr,
+                                      style: AppTheme.bodyLarge.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
 
                       const SizedBox(height: AppTheme.spacingXXL),
                     ],

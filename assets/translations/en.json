@@ -221,5 +221,15 @@
   "Medium (128kbps)": "Medium (128kbps)",
   "High (320kbps)": "High (320kbps)",
   "Creating Your Account": "Creating Your Account",
-  "Please wait while we set up your profile...": "Please wait while we set up your profile..."
+  "Please wait while we set up your profile...": "Please wait while we set up your profile...",
+  "Delete Account": "Delete Account",
+  "Are you sure you want to delete your account?": "Are you sure you want to delete your account?",
+  "This action cannot be undone. All your data, preferences, and listening history will be permanently deleted.": "This action cannot be undone. All your data, preferences, and listening history will be permanently deleted.",
+  "Type \"DELETE\" to confirm account deletion": "Type \"DELETE\" to confirm account deletion",
+  "Confirm Deletion": "Confirm Deletion",
+  "To confirm account deletion, please type \"DELETE\" below:": "To confirm account deletion, please type \"DELETE\" below:",
+  "Type DELETE here": "Type DELETE here",
+  "Please type \"DELETE\" exactly as shown": "Please type \"DELETE\" exactly as shown",
+  "Deleting Account...": "Deleting Account...",
+  "Account deleted successfully": "Account deleted successfully"
 }
